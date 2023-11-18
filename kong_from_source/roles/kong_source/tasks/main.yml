@@ -1,0 +1,40 @@
+- name: Download Kong source code
+  get_url:
+    url: https://codeload.github.com/Kong/kong/tar.gz/refs/tags/2.8.3
+    dest: /opt/kong-source
+    mode: 0755
+
+- name: Extract Kong source code
+  ansible.builtin.unarchive:
+    src: /opt/kong-source/2.8.3
+    dest: /opt
+    remote_src: yes
+
+- name: Build and Install Kong
+  shell: |
+    luarocks make
+    make install
+  args:
+    chdir: /opt/kong-2.8.3
+
+- name: Run Kong migrations
+  command: /opt/kong-2.8.3/bin/kong migrations bootstrap
+  args:
+    creates: /etc/kong/.bootstrapped
+  become: yes
+
+- name: Create Kong systemd service file
+  template:
+    src: kong-service.j2
+    dest: /etc/systemd/system/kong.service
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and start Kong service
+  systemd:
+    name: kong
+    enabled: yes
+    state: started
+  become: yes

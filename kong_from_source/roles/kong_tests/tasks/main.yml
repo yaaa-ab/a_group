@@ -1,0 +1,9 @@
+- name: Clone kong-tests-compose repository and create cassandra,postgress and redis db
+  git:
+    repo: https://github.com/thibaultcha/kong-tests-compose.git
+    dest: /opt/kong-tests-compose
+
+- name: Start Kong tests with Docker Compose
+  command: "docker compose up"
+  args:
+    chdir: /opt/kong-tests-compose

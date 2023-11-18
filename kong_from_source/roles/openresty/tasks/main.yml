@@ -1,0 +1,24 @@
+- name: Clone kong-build-tools
+  get_url:
+    url: https://github.com/kong/kong-build-tools
+    dest: /opt/kong-build-tools
+
+- name: Build OpenResty and dependencies
+  shell: ./kong-ngx-build -p build --openresty 1.19.9.1 --openssl 1.1.1m --luarocks 3.8.0 --pcre 8.45
+  args:
+    chdir: /opt/kong-build-tools/openresty-build-tools
+
+- name: Set environment variables
+  shell: |
+    export PATH=$PATH:/opt/kong-build-tools/openresty-build-tools/build/openresty/bin:/opt/kong-build-tools/openresty-build-tools/build/openresty/nginx/sbin:/opt/kong-build-tools/openresty-build-tools/build/luarocks/bin
+    export OPENSSL_DIR=/opt/kong-build-tools/openresty-build-tools/build/openssl
+    eval `luarocks path`
+
+- name: Add OpenResty environment variables to .bashrc
+  lineinfile:
+    dest: "~/.bashrc"
+    line: |
+      export PATH=$PATH:/opt/openresty-1.21.0.3/openresty/bin:/opt/openresty-1.21.0.3/openresty/nginx/sbin:/opt/openresty-1.21.0.3/luarocks/bin
+      export OPENSSL_DIR=/opt/openresty-1.21.0.3/openssl
+      eval `luarocks path`
+  when: ansible_distribution == 'Ubuntu'

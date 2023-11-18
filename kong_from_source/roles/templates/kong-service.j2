@@ -1,0 +1,13 @@
+[Unit]
+Description=Kong API Gateway
+After=network.target
+
+[Service]
+ExecStart=/usr/local/openresty/nginx/sbin/nginx -p /opt/kong -c nginx.conf
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target

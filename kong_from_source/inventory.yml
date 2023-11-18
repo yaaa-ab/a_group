@@ -1,0 +1,5 @@
+kong_server:
+  hosts:
+    kong:
+      ansible_ssh_host: 10.8.159.54
+      ansible_user: root
