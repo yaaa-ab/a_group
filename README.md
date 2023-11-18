@@ -6,4 +6,4 @@ Please consider changing the inventory.yml & kong_setup.yml to customize.
 
 Usage:
 cd kong_project/
-ansible-playbook -i my_inventory.yml kong_setup.yml --limit=ubuntu4kong
+ansible-playbook -i my_inventory.yml kong.yml --limit=kong

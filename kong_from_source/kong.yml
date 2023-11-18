@@ -2,8 +2,8 @@
   hosts: kong_server
   become: true
   roles:
-    #- dependencies
-    #- openresty
+    - dependencies
+    - openresty
     - docker
     - kong_tests
     - kong_source

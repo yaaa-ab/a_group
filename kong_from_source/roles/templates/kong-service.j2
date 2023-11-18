@@ -3,7 +3,7 @@ Description=Kong API Gateway
 After=network.target
 
 [Service]
-ExecStart=/usr/local/openresty/nginx/sbin/nginx -p /opt/kong -c nginx.conf
+ExecStart=/opt/kong-build-tools/openresty-build-tools/build/openresty/nginx/sbin/nginx -p /opt/kong -c nginx.conf
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure

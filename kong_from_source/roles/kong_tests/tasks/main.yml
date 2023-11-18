@@ -4,6 +4,6 @@
     dest: /opt/kong-tests-compose
 
 - name: Start Kong tests with Docker Compose
-  command: "docker compose up"
+  command: "docker compose up --build -d"
   args:
     chdir: /opt/kong-tests-compose

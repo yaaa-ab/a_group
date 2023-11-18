@@ -14,7 +14,7 @@
 - name: Update APT cache with Docker repository
   apt:
     update_cache: yes
-    
+
 - name: Install Docker
   apt:
     name:
